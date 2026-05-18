@@ -27,6 +27,9 @@ def root():
     return {"Foxdex": "Test"}
 
 
+# RECENT ENDPOINT
+
+
 class RecentRequest(BaseModel):
     days: int
 
@@ -40,3 +43,59 @@ async def get_recent(recent: RecentRequest):
             json={"query": "get_iocs", "days": recent.days},
         )
         return response.json()
+
+
+# TAG ENDPOINT
+
+
+class TagRequest(BaseModel):
+    tag: str
+    # limit of results
+    limit: int
+
+
+@app.post("/api/tag")
+async def get_tag(tag: TagRequest):
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            "https://threatfox-api.abuse.ch/api/v1/",
+            headers={"Auth-Key": threatfox_api_key},
+            json={
+                "query": "taginfo",
+                "tag": tag.tag,
+                "limit": tag.limit,
+            },
+        )
+        return response.json()
+
+
+# FAMILY ENDPOINT
+
+
+class FamilyRequest(BaseModel):
+    malware: str
+    # limit of results
+    limit: int
+
+
+@app.post("/api/family")
+async def get_family(family: FamilyRequest):
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            "https://threatfox-api.abuse.ch/api/v1/",
+            headers={"Auth-Key": threatfox_api_key},
+            json={
+                "query": "malwareinfo",
+                "malware": family.malware,
+                "limit": family.limit,
+            },
+        )
+        return response.json()
+
+
+# TODO ENDPOINTS HEALTH Checkpoint
+
+
+@app.post("/api/health")
+def get_health():
+    return {"status": "ok"}
