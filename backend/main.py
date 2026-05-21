@@ -7,6 +7,9 @@ from pydantic import BaseModel
 
 from dotenv import load_dotenv
 
+# DONT FORGET TO ACTIVATE VENV
+# source venv/bin/activate
+
 load_dotenv()
 app = FastAPI()
 
