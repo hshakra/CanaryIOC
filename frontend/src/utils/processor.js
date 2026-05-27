@@ -48,3 +48,43 @@ export function buildDailyChart(iocs) {
 
   return finalDaily;
 }
+
+export function groupByIOCType(iocs) {
+  let iocsByType = {};
+
+  // group by ioc_type, count
+  for (let a = 0; a < iocs.length; a++) {
+    if (iocs[a].ioc_type in iocsByType) {
+      iocsByType[iocs[a].ioc_type]++;
+    } else {
+      iocsByType[iocs[a].ioc_type] = 1;
+    }
+  }
+
+  return Object.entries(iocsByType).map(([type, count]) => ({
+    type,
+    count,
+    percentage: Math.round((count / iocs.length) * 100.0 * 10) / 10,
+  }));
+}
+
+export function rankTags(iocs) {
+  let tagsRank = {};
+
+  //iocs
+  for (let a = 0; a < iocs.length; a++) {
+    // tags per ioc
+    let fMapOfTags = iocs[a].tags?.flatMap((t) => t) || [];
+    for (let x = 0; x < fMapOfTags.length; x++) {
+      if (fMapOfTags[x] in tagsRank) {
+        tagsRank[fMapOfTags[x]]++;
+      } else {
+        tagsRank[fMapOfTags[x]] = 1;
+      }
+    }
+  }
+
+  return Object.entries(tagsRank)
+    .sort((a, b) => b[1] - a[1])
+    .map(([tag, count]) => ({ tag, count }));
+}
