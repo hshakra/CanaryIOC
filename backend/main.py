@@ -98,6 +98,6 @@ async def get_family(family: FamilyRequest):
 # TODO ENDPOINTS HEALTH Checkpoint
 
 
-@app.post("/api/health")
+@app.get("/api/health")
 def get_health():
     return {"status": "ok"}
