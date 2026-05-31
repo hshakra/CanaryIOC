@@ -1,16 +1,15 @@
 import os
-import httpx
 
+import httpx
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from dotenv import load_dotenv
-
 # DONT FORGET TO ACTIVATE VENV
 # source venv/bin/activate
 
-load_dotenv()
+_ = load_dotenv()
 app = FastAPI()
 
 origins = ["http://localhost:5173"]

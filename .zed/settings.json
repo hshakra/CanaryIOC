@@ -1,0 +1,11 @@
+{
+  "languages": {
+    "Python": {
+      "settings": {
+        "python": {
+          "pythonPath": "/Users/husam/personal/Foxden/frontend/venv/bin/python"
+        }
+      }
+    }
+  }
+}
